@@ -76,6 +76,10 @@ public class TaskController {
 	    week = new ArrayList<>();  // 次週のリストを新しくつくる
 
 	    // 2週目（「7」から始めているのは2週目だから）
+	    int leftOfMonth = day.lengthOfMonth() - day.getDayOfMonth();
+		leftOfMonth = day.lengthOfMonth() - leftOfMonth;
+		leftOfMonth = 7 - leftOfMonth;
+	    
 	    for(int i = 8; i <= day.lengthOfMonth(); i++) {
 	      week.add(day);  // 週のリストへ格納
 
@@ -89,12 +93,18 @@ public class TaskController {
 	    }
 
 	    // 最終週の翌月分
-	    w = day.getDayOfWeek();
-	    for(int i = 1; i < 7 - w.getValue(); i++) {  
-	      week.add(day);
-	      day = day.plusDays(1);
-	    }
-	    end = day;
+	    DayOfWeek endofmonth = day.getDayOfWeek();
+		int next = 7 - endofmonth.getValue();
+		if (next == 0) {
+			next = 7;
+		}
+		for (int n = 1; n <= next; n++) {
+			week.add(day);
+			day = day.plusDays(1);
+		}
+		month.add(week);
+			
+		end = day;
 
 	    // 日付とタスクを紐付けるコレクション
 	    MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
