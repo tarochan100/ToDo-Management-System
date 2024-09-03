@@ -79,21 +79,21 @@ public class TaskController {
 	    int leftOfMonth = day.lengthOfMonth() - day.getDayOfMonth();
 		leftOfMonth = day.lengthOfMonth() - leftOfMonth;
 		leftOfMonth = 7 - leftOfMonth;
-	    
-	    for(int i = 8; i <= day.lengthOfMonth(); i++) {
-	      week.add(day);  // 週のリストへ格納
 
-	      w = day.getDayOfWeek();
-	      if(w == DayOfWeek.SATURDAY) {  // 土曜日だったら
-	        month.add(week);  // 当該週のリストを、月のリストへ格納する
-	        week = new ArrayList<>();  // 次週のリストを新しくつくる
-	      }
+		for (int i = 7; i <= day.lengthOfMonth() + leftOfMonth; i++) {
+		  week.add(day);  // 週のリストへ格納
 
-	      day = day.plusDays(1);  // 1日進める
+		  w = day.getDayOfWeek();
+		  if(w == DayOfWeek.SATURDAY) {  // 土曜日だったら
+		    month.add(week);  // 当該週のリストを、月のリストへ格納する
+		    week = new ArrayList<>();  // 次週のリストを新しくつくる
+		  }
+
+		  day = day.plusDays(1);  // 1日進める
 	    }
 
 	    // 最終週の翌月分
-	    DayOfWeek endofmonth = day.getDayOfWeek();
+		DayOfWeek endofmonth = day.getDayOfWeek();
 		int next = 7 - endofmonth.getValue();
 		if (next == 0) {
 			next = 7;
