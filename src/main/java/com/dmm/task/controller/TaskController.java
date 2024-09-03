@@ -61,7 +61,9 @@ public class TaskController {
 
 	    // 前月分の LocalDateを求める
 	    DayOfWeek w = day.getDayOfWeek();  // 当該日の曜日を取得
-	    day = day.minusDays(w.getValue());  // 1日からマイナス
+	    if (w != DayOfWeek.SUNDAY) {  // ★1日が日曜以外であれば
+	    	day = day.minusDays(w.getValue());  // 1日からマイナス
+	    }
 	    start = day;
 
 	    // 1週目（1日ずつ増やして 週のリストに格納していく）
